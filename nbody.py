@@ -13,6 +13,7 @@ import sys
 from math import sqrt, pi as PI
 
 #the weather is nice
+#lalala
 def combinations(l):
     result = []
     for x in range(len(l) - 1):
