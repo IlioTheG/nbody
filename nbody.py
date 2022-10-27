@@ -14,6 +14,7 @@ from math import sqrt, pi as PI
 
 #the weather is nice
 #lalala
+#lelele
 def combinations(l):
     result = []
     for x in range(len(l) - 1):
@@ -68,7 +69,7 @@ BODIES = {
 
 SYSTEM = tuple(BODIES.values())
 PAIRS = tuple(combinations(SYSTEM))
-
+SYSTEM [0][0][:]
 
 def advance(dt, n, bodies=SYSTEM, pairs=PAIRS):
     for i in range(n):
@@ -90,7 +91,7 @@ def advance(dt, n, bodies=SYSTEM, pairs=PAIRS):
             r[0] += dt * vx
             r[1] += dt * vy
             r[2] += dt * vz
-
+        #write attributes
 
 def report_energy(bodies=SYSTEM, pairs=PAIRS, e=0.0):
     for ((x1, y1, z1), v1, m1, (x2, y2, z2), v2, m2) in pairs:
@@ -115,10 +116,13 @@ def offset_momentum(ref, bodies=SYSTEM, px=0.0, py=0.0, pz=0.0):
 
 
 def main(n, ref="sun"):
+    #open file
+    #write header
     offset_momentum(BODIES[ref])
     report_energy()
     advance(0.01, n)
     report_energy()
+    #close file
 
 
 if __name__ == "__main__":
