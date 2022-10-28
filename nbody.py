@@ -12,10 +12,6 @@
 import sys
 from math import sqrt, pi as PI
 
-#the weather is nice
-#lalala
-#lelele
-#lilili
 def combinations(l):
     result = []
     for x in range(len(l) - 1):
@@ -72,7 +68,14 @@ SYSTEM = tuple(BODIES.values())
 PAIRS = tuple(combinations(SYSTEM))
 SYSTEM [0][0][:]
 
-def advance(dt, n, bodies=SYSTEM, pairs=PAIRS):
+map = {
+    0: "sun",
+    1: "jupiter",
+    2: "saturn",
+    3: "uranus",
+    4: "neptune",
+}
+def advance(dt, n, fh,  bodies=SYSTEM, pairs=PAIRS):
     for i in range(n):
         for ([x1, y1, z1], v1, m1, [x2, y2, z2], v2, m2) in pairs:
             dx = x1 - x2
@@ -92,7 +95,8 @@ def advance(dt, n, bodies=SYSTEM, pairs=PAIRS):
             r[0] += dt * vx
             r[1] += dt * vy
             r[2] += dt * vz
-        #write attributes
+        for i in range(len(SYSTEM)):
+            fh.write(map[i] + ";" + 'POINTZ({} {} {});{}\n'.format(str(SYSTEM[i][0][0]), str(SYSTEM[i][0][1]), str(SYSTEM[i][0][1]), SYSTEM[i][2]))
 
 def report_energy(bodies=SYSTEM, pairs=PAIRS, e=0.0):
     for ((x1, y1, z1), v1, m1, (x2, y2, z2), v2, m2) in pairs:
@@ -117,13 +121,13 @@ def offset_momentum(ref, bodies=SYSTEM, px=0.0, py=0.0, pz=0.0):
 
 
 def main(n, ref="sun"):
-    #open file
-    #write header
+    fh = open('planets.csv', 'w')
+    fh.write("planet;position;mass\n")
     offset_momentum(BODIES[ref])
     report_energy()
-    advance(0.01, n)
+    advance(0.01, n, fh)
     report_energy()
-    #close file
+    fh.close()
 
 
 if __name__ == "__main__":
